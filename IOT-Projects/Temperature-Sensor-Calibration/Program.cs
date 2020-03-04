@@ -19,6 +19,7 @@ namespace Temperature_Sensor_Calibration
             while (!shutdown)
             {
                 Console.Beep();
+                Console.Beep();
                 Console.WriteLine("Input temperature here:");
                 var input = Console.ReadLine();
                 if (input.Equals("shutdown"))
@@ -32,7 +33,7 @@ namespace Temperature_Sensor_Calibration
                     CollectedData.Add(temperature);
                 }
 
-                Thread.Sleep(5000);
+                Thread.Sleep((60000*2));
             }
 
             WriteResultToFile("ESP32_Result.txt", serialTemperature.CollectedData);
