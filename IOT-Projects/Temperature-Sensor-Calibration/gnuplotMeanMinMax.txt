@@ -1,0 +1,18 @@
+f(x) = a+(b-a)*exp(-k*x)
+g(x) = c+(d-a)*exp(-l*x)
+h(x) = e+(f-a)*exp(-m*x)
+a = 1500
+c = 1500
+e = 1500
+b = 750
+d = 750
+f = 750
+k = 0.00005
+l = 0.00005
+m = 0.00005
+fit f(x) 'mean.dat' using 1:2 via a,b,k
+fit g(x) 'min.dat' using 1:2 via c,d,l
+fit h(x) 'max.dat' using 1:2 via e,f,m
+set xlabel "Time Buckets"   
+set ylabel "Measured Thermistor Value (0-4095)"
+plot f(x) title "Mean Function", g(x) title "Min Function", h(x) title "Max Function"

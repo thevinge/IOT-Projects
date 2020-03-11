@@ -1,0 +1,8 @@
+f(x) = a+(b-a)*exp(-k*x)
+a = 25
+b = 80
+k = 0.00005
+fit f(x) 'result.txt' using 1:2 via a,b,k
+set xlabel "Time (Seconds)"
+set ylabel "Temperature (°C)"
+plot 'result.txt' u 1:2 title "Measured Ground Truth", f(x) title "Fitted Model"
