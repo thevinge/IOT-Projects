@@ -12,13 +12,14 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: Passw0rd
-  volumes:
-    - data:/var/lib/postgresql
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: dininfo1
+    volumes:
+      - data:/var/lib/postgresql
 
 volumes:
-  data
+  data:
+    driver: local
 
 networks:
   default:
