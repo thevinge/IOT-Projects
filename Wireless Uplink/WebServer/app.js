@@ -35,8 +35,11 @@ app.set('port', port);
 
 var server = require('http').Server(app);
 
-app.use('/api/insert', indexRouter);
+app.get('/health', function (req, res, next) {
+    res.status(200).send("ok");
+});
 
+app.use('/api/insert', indexRouter);
 
 server.listen(port);
 server.on('error', onError);
