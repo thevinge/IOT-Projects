@@ -5,7 +5,7 @@
 
 #include <HTTPClient.h>
 
-
+#include <ArduinoJson.h>
 
 #include <Wire.h>
 #include <ErriezBH1750.h>
@@ -19,38 +19,28 @@ BH1750 sensor(LOW);
 // WIFI Setup
 const char* ssid = "PV_WLan";
 const char* password =  "H5@dA56aQ";
+const size_t capacity = JSON_OBJECT_SIZE(3); //Capacity for three entries
 
 WiFiMulti wifiMulti;
+HTTPClient http;
 
 //Data Setup
 int tranmissionNumber = 0;
-float temperature;
-uint16_t lux;
+int temperature;
+int lux;
 
 
 void setup() {
   Serial.begin(115200);
-
-  delay(4000);   //Delay needed before calling the WiFi.begin
-  Serial.println("test");
   setupLightSensor();
   setupWifi();
-
-
 }
 
 void setupWifi() {
 
   wifiMulti.addAP(ssid, password);
+  http.setReuse(true);
 
-  //  WiFi.begin(ssid, password);
-  //
-  //  while (WiFi.status() != WL_CONNECTED) { //Check for the connection
-  //    delay(1000);
-  //    Serial.println("Connecting to WiFi..");
-  //  }
-  //
-  //  Serial.println("Connected to the WiFi network");
 }
 
 void setupLightSensor() {
@@ -58,28 +48,42 @@ void setupLightSensor() {
   Wire.begin(25, 26);
   // Initialize sensor in continues mode, medium 1 lx resolution
   sensor.begin(ModeContinuous, ResolutionLow);
-
   // Start conversion
   sensor.startConversion();
 }
 
-uint16_t readLightSensor() {
+void readLightSensor() {
   if (sensor.waitForCompletion()) {
     // Read light
-    return sensor.read();
+    lux = sensor.read();
   }
 }
 
 void requestHttp() {
 
   if ((wifiMulti.run() == WL_CONNECTED)) {
+    tranmissionNumber = tranmissionNumber + 1;
 
-    HTTPClient http;
+    DynamicJsonDocument doc(capacity);
 
-    http.begin("http://google.com");
+    //HTTPClient http;
 
+    http.begin("http://167.172.184.103/api/insert");
+    //http.begin("http://167.172.184.103/health");
+    http.addHeader("Content-Type", "application/json");
+
+    doc["temp"] = temperature;
+    doc["light"] = lux;
+    doc["reqno"] = tranmissionNumber;
+    String requestjson;
+
+    //requestjson = String("{\"temp\": 24,") + String("\"light\":") + lux + String( ",") + String( "\"reqno\":") + tranmissionNumber + String( "}");
+    //serializeJsonPretty(doc,requestjson);
+    serializeJson(doc, requestjson);
+    Serial.println(requestjson);
     // start connection and send HTTP header
-    int httpCode = http.GET();
+    
+    int httpCode = http.POST(requestjson);
 
     // httpCode will be negative on error
     if (httpCode > 0) {
@@ -88,8 +92,15 @@ void requestHttp() {
 
       // file found at server
       if (httpCode == HTTP_CODE_OK) {
-        
+        String payload = http.getString();
+        Serial.println(payload);
         Serial.println(httpCode);
+      }
+      
+
+      if (httpCode == HTTP_CODE_CREATED) {
+        String payload = http.getString();
+        Serial.println(payload);
       }
     } else {
       Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
@@ -98,43 +109,18 @@ void requestHttp() {
     http.end();
 
   }
-  //  if (WiFi.status() == WL_CONNECTED) { //Check WiFi connection status
-  //    tranmissionNumber = tranmissionNumber + 1;
-  //
-  //    HTTPClient http;
-  //    //http.begin("http://jsonplaceholder.typicode.com/posts");  //Specify destination for HTTP request
-  //    //http.begin("http://google.com");  //Specify destination for HTTP request
-  //    http.addHeader("Content-Type", "text/plain");             //Specify content-type header
-  //
-  //    int httpResponseCode = http.get();   //Send the actual POST request
-  //
-  //    if (httpResponseCode > 0) {
-  //
-  //      //String response = http.getString();                       //Get the response to the request
-  //
-  //      Serial.println(httpResponseCode);   //Print return code
-  //      // Serial.println(response);           //Print request answer
-  //
-  //    } else {
-  //
-  //      Serial.print("Error on sending POST: ");
-  //      Serial.println(httpResponseCode);
-  //
-  //    }
-  //
-  //    http.end();  //Free resources
-  //
-  //  } else {
-  //
-  //    Serial.println("Error in WiFi connection");
-  //
-  //  }
+
+}
+
+void readTemperature() {
+  temperature = analogRead(39);
 }
 
 void loop() {
 
-  lux = readLightSensor();
+  readLightSensor();
+  readTemperature();
   requestHttp();
-  delay(10000);  //Send a request every 10 seconds
+  delay(1000);  //Send a request every 10 seconds
 
 }
