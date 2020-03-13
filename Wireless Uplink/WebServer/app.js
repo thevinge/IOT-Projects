@@ -4,8 +4,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyparser = require('body-parser');
 
-var usersRouter = require('./routes/users');
-var debug = require('debug')('inoutboardserver:server');
+var indexRouter = require('./routes/index');
+var debug = require('debug')('esp32endpoint:server');
 
 var app = require('express')();
 
@@ -34,17 +34,9 @@ function normalizePort(val) {
 app.set('port', port);
 
 var server = require('http').Server(app);
-var io = require('socket.io')(server);
 
-var indexRouter = require('./routes/index').setup(io);
+app.use('/api/insert', indexRouter);
 
-app.use('/', indexRouter);
-
-app.use('/api/users', usersRouter);
-
-io.on('connection', function(socket){
-    console.log('a user connected');
-});
 
 server.listen(port);
 server.on('error', onError);
