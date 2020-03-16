@@ -40,7 +40,7 @@ void setupWifi() {
 
   wifiMulti.addAP(ssid, password);
   http.setReuse(true);
-
+  delay(5000);
 }
 
 void setupLightSensor() {
@@ -60,10 +60,10 @@ void readLightSensor() {
 }
 
 void requestHttp() {
-
+  
   if ((wifiMulti.run() == WL_CONNECTED)) {
+    
     tranmissionNumber = tranmissionNumber + 1;
-
     DynamicJsonDocument doc(capacity);
 
     http.begin("http://167.172.184.103/api/insert");
