@@ -66,8 +66,6 @@ void requestHttp() {
 
     DynamicJsonDocument doc(capacity);
 
-    //HTTPClient http;
-
     http.begin("http://167.172.184.103/api/insert");
     //http.begin("http://167.172.184.103/health");
     http.addHeader("Content-Type", "application/json");
@@ -77,8 +75,6 @@ void requestHttp() {
     doc["reqno"] = tranmissionNumber;
     String requestjson;
 
-    //requestjson = String("{\"temp\": 24,") + String("\"light\":") + lux + String( ",") + String( "\"reqno\":") + tranmissionNumber + String( "}");
-    //serializeJsonPretty(doc,requestjson);
     serializeJson(doc, requestjson);
     Serial.println(requestjson);
     // start connection and send HTTP header
@@ -97,7 +93,6 @@ void requestHttp() {
         Serial.println(httpCode);
       }
       
-
       if (httpCode == HTTP_CODE_CREATED) {
         String payload = http.getString();
         Serial.println(payload);
@@ -121,6 +116,6 @@ void loop() {
   readLightSensor();
   readTemperature();
   requestHttp();
-  delay(1000);  //Send a request every 10 seconds
+  //delay(10);  //Send a request every 10 seconds
 
 }
