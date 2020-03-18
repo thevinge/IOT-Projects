@@ -1,0 +1,23 @@
+[
+    [
+        rdflib.term.Literal('0.0658076', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#float')),
+        rdflib.term.Literal('-26.0289', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#float')),
+        rdflib.term.Literal('Max', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#string')),
+        rdflib.term.URIRef('https://github.com/thevinge/IOT-Projects#LinearFunction'),
+        rdflib.term.URIRef('https://github.com/thevinge/IOT-Projects#/function/max')
+    ],
+    [
+        rdflib.term.Literal('0.0678319', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#float')),
+        rdflib.term.Literal('-26.1284', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#float')),
+        rdflib.term.Literal('Min', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#string')),
+        rdflib.term.URIRef('https://github.com/thevinge/IOT-Projects#LinearFunction'),
+        rdflib.term.URIRef('https://github.com/thevinge/IOT-Projects#/function/min')
+    ],
+    [
+        rdflib.term.Literal('0.0627918', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#float')),
+        rdflib.term.Literal('-20.9698', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#float')),
+        rdflib.term.Literal('Mean', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#string')),
+        rdflib.term.URIRef('https://github.com/thevinge/IOT-Projects#LinearFunction'),
+        rdflib.term.URIRef('https://github.com/thevinge/IOT-Projects#/function/mean')
+    ]
+]

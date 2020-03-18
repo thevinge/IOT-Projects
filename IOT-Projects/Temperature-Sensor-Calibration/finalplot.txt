@@ -1,0 +1,15 @@
+cd 'D:\Code\IOT-Projects\IOT-Projects\Temperature-Sensor-Calibration\DataFiles'
+
+f(x) = a*x+b
+fit f(x) 'maxCombined.dat' using 1:2 via a,b
+plot f(x), 'maxCombined.dat' u 1:2
+
+
+f(x) = a*x+b
+fit f(x) 'minCombined.dat' using 1:2 via a,b
+plot f(x), 'minCombined.dat' u 1:2
+
+
+f(x) = a*x+b
+fit f(x) 'meanCombined.dat' using 1:2 via a,b
+plot f(x), 'meanCombined.dat' u 1:2

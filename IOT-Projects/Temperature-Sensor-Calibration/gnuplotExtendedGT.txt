@@ -1,7 +1,7 @@
 f(x) = a+(b-a)*exp(-k*x)
 a = 25
 b = 80
-k = 0.00005
+k = 0.0005
 fit f(x) 'result.txt' using 1:2 via a,b,k
 set xlabel "Time (Seconds)"
 set ylabel "Temperature (°C)"

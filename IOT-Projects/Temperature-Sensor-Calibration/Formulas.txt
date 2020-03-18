@@ -1,0 +1,34 @@
+Max Function: h(x) = a+(b-a)*e^(-k*x)
+a = 791.792
+b = 1516.36
+k = 0.00351936
+
+
+Min Function: g(x) = a+(b-a)*e^(-k*x)
+a = 779.408
+b = 1472.59
+k = 0.0035448
+
+
+Mean Function: f(x) = a+(b-a)*e^(-k*x)
+a = 790.328
+b = 1504.64
+k = 0.00365181
+
+Extended Ground Truth: e(x) = a+(b-a)*e^(-k*x)
+a = 23.202
+b = 74.0784
+k = 0.000258287
+
+Max Combined: f(x) = a*x+b
+a = 0.0658076
+b = -26.0289
+
+Min Combined: f(x) = a*x+b
+a = 0.0678319
+b = -26.1284
+
+Mean Combined: f(x) = a*x+b
+a = 0.0627918
+b = -20.9698
+

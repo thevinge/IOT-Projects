@@ -1,0 +1,33 @@
+@prefix frame: <https://brickschema.org/schema/1.0.3/BrickFrame#> .
+@prefix brick: <https://brickschema.org/schema/1.0.3/Brick#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix iot: <https://github.com/thevinge/IOT-Projects#> .
+
+iot:FunctionType a owl:Class .
+iot:LinearFunction a iot:FunctionType .
+
+iot:isType a owl:ObjectProperty;
+    rdfs:domain iot:Function ;
+    rdfs:range iot:FunctionType .
+
+iot:a a owl:DatatypeProperty;
+    rdfs:domain iot:Function ;
+    rdfs:range xsd:float .
+
+iot:b a owl:DatatypeProperty;
+    rdfs:domain iot:Function ;
+    rdfs:range xsd:float .
+    
+iot:name a owl:DatatypeProperty;
+    rdfs:domain iot:Function ;
+    rdfs:range xsd:string .
+
+iot:Function a owl:Class;
+    rdfs:subClassOf [
+        a owl:Restriction;
+        owl:onProperty iot:isType;
+        owl:allValuesFrom iot:FunctionType; 
+    ]; .
