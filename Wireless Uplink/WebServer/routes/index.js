@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var db = require('..\\database');
+var db = require('../database');
 
 router.post('/create', function(req, res, next) {
     let name = req.body.name;
@@ -12,5 +12,21 @@ router.post('/create', function(req, res, next) {
             res.status(500).send(err)
         });
 });
+
+
+
+router.post('/', function(req, res, next) {
+    let temp = req.body.temp;
+    let light = req.body.light;
+    let reqno = req.body.reqno;
+    db.none("INSERT INTO tiot (temp,light,reqno) values ($1, $2, $3)", [temp, light, reqno])
+        .then(data => {
+            res.status(200).send();
+        })
+        .catch(err => {
+            res.status(500).send(err)
+        });
+});
+
 
 module.exports = router;
